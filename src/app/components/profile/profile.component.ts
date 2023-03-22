@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
 
   public url;
   public posts: Array<Post>;
-  public user!: User;
+  public user: User;
   public identity;
   public token;
 
@@ -30,6 +30,7 @@ export class ProfileComponent implements OnInit {
     this.posts = [];
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
+    this.user = new User(1, '', '', "ROLE_USER", '', '', '', '');
   }
 
   ngOnInit() {
