@@ -1,0 +1,55 @@
+<div class="col-md-12 mt-3">
+  <h1>{{page_title}}</h1>
+  <p *ngIf="status != 'success'">Modifica tus datos personales de usuario</p>
+  <hr>
+
+  <div class="alert alert-success col-md-5 mt-3" *ngIf="status == 'success'">Los datos se han guardado correctamente !!</div>
+
+  <div class="alert alert-danger col-md-5" *ngIf="status == 'error'">Los datos no se han guardado !!</div>
+
+  <!-- Formulario de registro -->
+  <form class="col-md-5 m-lg-0 p-lg-0" #userEditForm="ngForm" (ngSubmit)="onSubmit(userEditForm)">
+    <div class="mb-3">
+      <label for="name" class="form-label">Nombre</label>
+      <input type="text" name="name" id="name" class="form-control" #name="ngModel" [(ngModel)]="user.name" required pattern="[a-zA-Z]+">
+
+      <small *ngIf="!name.valid && name.touched" class="invalid-feedback d-block">El nombre no es válido</small>
+    </div>
+
+    <div class="mb-3">
+      <label for="surname">Apellidos</label>
+      <input type="text" name="surname" id="surname" class="form-control" #surname="ngModel" [(ngModel)]="user.surname" required pattern="[a-zA-Z]+">
+
+      <small *ngIf="!surname.valid && surname.touched" class="invalid-feedback d-block">Los apellidos no son válidos</small>
+    </div>
+
+    <div class="mb-3">
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" class="form-control" #email="ngModel" [(ngModel)]="user.email" required pattern="[a-z0-9._%+-]+@[a-z0-9._%+-]+\.[a-z]{2,4}$">
+
+      <small *ngIf="!email.valid && email.touched" class="invalid-feedback d-block">El correo no es válido</small>
+    </div>
+
+    <div class="mb-3">
+      <label for="description">Descripción</label>
+      <textarea [froalaEditor]="froala_options" name="description" id="description" class="form-control" #description="ngModel" [(ngModel)]="user.description">{{user.description}}</textarea>
+    </div>
+
+    <div class="mb-3 fr-view">
+      <label for="image">Avatar</label>
+
+      <div *ngIf="identity && identity.image">
+        <img src="{{url + 'user/avatar/' + identity.image}}" class="avatar_edit">
+      </div>
+
+      <angular-file-uploader id='image' [config]="afuConfig"
+                             [resetUpload]="true"
+                             (ApiResponse)="avatarUpload($event)">
+      </angular-file-uploader>
+    </div>
+
+    <input type="submit" value="Guardar cambios" class="btn btn-success" [disabled]="userEditForm.invalid">
+  </form>
+  <br>
+
+</div>
