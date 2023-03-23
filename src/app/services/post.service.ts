@@ -22,6 +22,9 @@ export class PostService {
   }
 
   create(token: any, post: Post):Observable<any> {
+    // Limpiar campo content (editor texto enriquecido) htmlEntities -> UTF-8
+    post.content = global.htmlEntities(post.content);
+
     let json = JSON.stringify(post);
     let params = "json=" + json;
     let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
@@ -41,6 +44,9 @@ export class PostService {
   }
 
   update(token: any, post: Post, id: number): Observable<any> {
+    // Limpiar campo content (editor texto enriquecido) htmlEntities -> UTF-8
+    post.content = global.htmlEntities(post.content);
+
     let json = JSON.stringify(post);
     let params = "json=" + json;
     let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')

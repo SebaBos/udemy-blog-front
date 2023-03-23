@@ -41,6 +41,9 @@ export class UserService {
   }
 
   update(token: any, user: User): Observable<any> {
+    // Limpiar campo descripción (editor texto enriquecido) htmlEntities -> UTF-8
+    user.description = global.htmlEntities(user.description);
+
     let json = JSON.stringify(user);
     let params = "json=" + json;
     let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
